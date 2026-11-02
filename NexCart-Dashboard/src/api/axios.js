@@ -1,3 +1,5 @@
+// This file configures a shared Axios client for communicating with your backend API.
+
 import axios from "axios";
 
 // const ApiLink = "https://e-commerce-api-3wara.vercel.app/"
@@ -5,7 +7,7 @@ import axios from "axios";
 // const api = axios
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "",
+  baseURL: "https://e-commerce-api-3wara.vercel.app",
   headers: {
     "Content-Type": "application/json",
   },
@@ -23,10 +25,14 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem("dashboard-token");
-      window.location.href = "/login";
+    if (error.response.status === 401) {
+      localStorage.removeItem("token");
+
+      if (!window.location.pathname.startsWith("/login")) {
+        window.history.replaceState(null, "", "/login");
+      }
     }
+
     return Promise.reject(error);
   }
 );
