@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import Login from "./pages/Login";
@@ -12,9 +12,4 @@ export default function App() {
     </BrowserRouter>
   );
 }
-
-
-
-
-// export default App
 
