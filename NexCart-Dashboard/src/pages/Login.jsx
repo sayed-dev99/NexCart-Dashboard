@@ -7,12 +7,15 @@ import { useAuth } from "../context/AuthContext.jsx";
 
 
 function Login() {
-  const { loginUser, loading } = useAuth();
-  const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
+    const { loginUser, loading } = useAuth();
+    const [showPassword, setShowPassword] = useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
+
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,8 +43,9 @@ function Login() {
   return (
     <div className="min-h-screen bg-[#F5F7FA] dark:bg-[#0B1120] flex items-center justify-center px-4 py-5 transition-colors duration-300">
       <div className="w-full max-w-6xl bg-white dark:bg-[#141B2D] rounded-3xl shadow-2xl grid grid-cols-1 lg:grid-cols-2 transition-colors duration-300">
-        {/* Left Side */}
-        <div className="hidden lg:flex flex-col justify-center bg-gradient-to-br from-blue-600 to-cyan-400 px-12 py-10 text-white">
+
+
+        <div className="hidden lg:flex flex-col justify-center bg-gradient-to-br rounded-l-3xl from-blue-600 to-cyan-400 px-12 py-10 text-white">          
           <div className="flex items-center gap-3 mb-8">
             <img
               src={logoImage}
