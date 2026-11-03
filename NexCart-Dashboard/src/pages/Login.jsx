@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import toast from 'react-hot-toast';
+import { Mail, Lock, ShoppingBag } from "lucide-react";
+import Button from "../components/ui/Buttons";
+
+
 
 // import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 // import { FcGoogle } from "react-icons/fc";
-// import logoImage from "../assets/logo.png";
+import logoImage from "../assets/logo.png";
 
 
 function Login() {
@@ -20,7 +25,7 @@ function Login() {
   });
 
     // const { loginUser, loading } = useAuth();
-    // const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     // const [email, setEmail] = useState("");
     // const [password, setPassword] = useState("");
     // const [error, setError] = useState("");
@@ -154,8 +159,8 @@ const onSubmit = async (e) => {
                   <input
                     type="email"
                     placeholder="you@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={form.email}
+                    onChange={(e) => setForm(e.target.value)}
                     className="w-full bg-transparent py-4 px-3 text-black dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 outline-none"
                     required
                   />
