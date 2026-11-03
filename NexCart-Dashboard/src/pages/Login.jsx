@@ -1,44 +1,81 @@
 import React, { useState } from "react";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
-import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
-import logoImage from "../assets/logo.png";
-import { useAuth } from "../context/AuthContext.jsx";
+import { useAuth } from "../context/AuthContext";
+
+// import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+// import { FcGoogle } from "react-icons/fc";
+// import logoImage from "../assets/logo.png";
 
 
 function Login() {
-    const { loginUser, loading } = useAuth();
-    const [showPassword, setShowPassword] = useState(false);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-    const navigate = useNavigate();
+
+  //Logic
+  const navigate = useNavigate();
+  const { loginUser } = useAuth();
+  const [ loading, setLoading ] = useState(false);
+
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+    // const { loginUser, loading } = useAuth();
+    // const [showPassword, setShowPassword] = useState(false);
+    // const [email, setEmail] = useState("");
+    // const [password, setPassword] = useState("");
+    // const [error, setError] = useState("");
 
 
 
+const onSubmit = async (e) => {
+  e.preventDefault();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+  if (!form.email || !form.password) {
+    return toast.error("please fill all fields");
+  }
 
-    if (!email || !password) {
-      setError("Please fill in all fields.");
-      return;
-    }
+  setLoading(true);
 
-    localStorage.removeItem("dashboard-token");
+  try {
+    await loginUser(form);
+    toast.success("login successful");
 
-    const result = await loginUser(email, password);
+    setTimeout(() => {
+      navigate("/dashboard");
+    }, 1000);
+  } catch (error) {
+    toast.error(
+      error?.response?.data?.message || "please check your credentials"
+    );
+  } finally {
+      setLoading(false);
+  }
+};
 
-    if (!result.success) {
-      setError(result.message);
-      return;
-    }
 
-    console.log("Login Success");
 
-    navigate("/orders");
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setError("");
+
+  //   if (!email || !password) {
+  //     setError("Please fill in all fields.");
+  //     return;
+  //   }
+
+  //   localStorage.removeItem("dashboard-token");
+
+  //   const result = await loginUser(email, password);
+
+  //   if (!result.success) {
+  //     setError(result.message);
+  //     return;
+  //   }
+
+  //   console.log("Login Success");
+
+  //   navigate("/orders");
+  // };
 
   return (
     <div className="min-h-screen bg-[#F5F7FA] dark:bg-[#0B1120] flex items-center justify-center px-4 py-5 transition-colors duration-300">
@@ -103,7 +140,7 @@ function Login() {
               Sign in to continue to your NexCart dashboard.
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={onSubmit} className="space-y-4">
               <div>
                 <label className="text-gray-700 dark:text-gray-300 text-sm transition-colors">
                   Email Address
