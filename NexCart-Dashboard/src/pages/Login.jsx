@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import toast from 'react-hot-toast';
 import { Mail, Lock, ShoppingBag } from "lucide-react";
 import Button from "../components/ui/Buttons";
-
-
-
-// import { Mail, Lock, Eye, EyeOff } from "lucide-react";
-// import { FcGoogle } from "react-icons/fc";
 import logoImage from "../assets/logo.png";
 
+import { Eye, EyeOff } from "lucide-react";
+import { FcGoogle } from "react-icons/fc";
+
+
+    // const [email, setEmail] = useState("");
+
+//////////////////////////
 
 function Login() {
 
@@ -18,22 +20,20 @@ function Login() {
   const navigate = useNavigate();
   const { loginUser } = useAuth();
   const [ loading, setLoading ] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
 
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
-    // const { loginUser, loading } = useAuth();
-    const [showPassword, setShowPassword] = useState(false);
-    // const [email, setEmail] = useState("");
-    // const [password, setPassword] = useState("");
-    // const [error, setError] = useState("");
 
 
 
 const onSubmit = async (e) => {
   e.preventDefault();
+  setError("");
 
   if (!form.email || !form.password) {
     return toast.error("please fill all fields");
@@ -49,11 +49,13 @@ const onSubmit = async (e) => {
       navigate("/dashboard");
     }, 1000);
   } catch (error) {
-    toast.error(
-      error?.response?.data?.message || "please check your credentials"
-    );
+    const message =
+      error?.response?.data?.message || "please check your credentials";
+
+    setError(message);
+    toast.error(message);
   } finally {
-      setLoading(false);
+    setLoading(false);
   }
 };
 
@@ -160,7 +162,7 @@ const onSubmit = async (e) => {
                     type="email"
                     placeholder="you@example.com"
                     value={form.email}
-                    onChange={(e) => setForm(e.target.value)}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
                     className="w-full bg-transparent py-4 px-3 text-black dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 outline-none"
                     required
                   />
@@ -189,20 +191,20 @@ const onSubmit = async (e) => {
                   <input
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={form.password}
+                    onChange={(e) => setForm({ ...form, password: e.target.value })}
                     className="w-full bg-transparent py-4 px-3 text-black dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 outline-none"
                     required
                   />
 
-                  <button
+                  <Button
                     type="button"
                     onClick={() => setShowPassword((prev) => !prev)}
                     className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
                     tabIndex={-1}
                   >
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </button>
+                  </Button>
                 </div>
               </div>
 
@@ -215,13 +217,13 @@ const onSubmit = async (e) => {
                 <label htmlFor="remember">Remember me</label>
               </div>
 
-              <button
+              <Button
                 type="submit"
                 disabled={loading}
                 className="w-full py-4 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-white font-semibold hover:opacity-90 transition disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {loading ? "Signing In..." : <>Sign In &rarr;</>}
-              </button>
+              </Button>
             </form>
 
             {error && (
@@ -238,17 +240,18 @@ const onSubmit = async (e) => {
               <div className="flex-1 h-px bg-gray-300 dark:bg-gray-700 transition-colors"></div>
             </div>
 
-            <button
+            <Button
               type="button"
+              variant="google"
               onClick={() => {
                 window.location.href =
                   "https://e-commerce-api-3wara.vercel.app/auth/google";
               }}
-              className="w-full py-4 rounded-xl bg-gray-100 dark:bg-[#1D2740] hover:bg-gray-200 dark:hover:bg-[#263352] transition flex items-center justify-center gap-3 text-gray-900 dark:text-white"
+              className="w-full py-4"
             >
               <FcGoogle size={24} />
               <span>Continue with Google</span>
-            </button>
+            </Button>
 
             <p className="text-center text-gray-500 dark:text-gray-400 text-xs mt-6 transition-colors">
               Secure Admin Access

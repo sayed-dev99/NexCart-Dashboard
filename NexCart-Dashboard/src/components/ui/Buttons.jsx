@@ -22,6 +22,9 @@ export default function Button({
 
         solid:
             "bg-slate-900 text-white hover:bg-slate-700 border border-slate-900 dark:bg-slate-800 dark:hover:bg-slate-700 dark:border-slate-700",
+
+        google:
+            "bg-gray-200 text-gray-900 hover:bg-gray-300 dark:bg-[#1D2740] dark:text-white dark:hover:bg-[#263352]",
     };
 
     return (
