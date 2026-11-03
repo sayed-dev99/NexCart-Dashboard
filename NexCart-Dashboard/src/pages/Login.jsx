@@ -56,9 +56,7 @@ function Login() {
           </div>
 
           <h1 className="text-[52px] font-bold leading-tight">
-            Your Store.
-            <br />
-            Your Control.
+            Manage Your Store Like a Pro
           </h1>
 
           <p className="mt-5 text-[18px] text-blue-100 leading-9">
