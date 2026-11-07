@@ -31,15 +31,7 @@ if (loading)
 
 
     return (
-    // <div>TodoList</div>
-
-        <ul>
-    {todos.map((t) => (
-        <li key={t.id}>{t.title}</li>
-    ))}
-    </ul>
-
-    
+    <div>TodoList</div>
     );
 }
 

@@ -10,9 +10,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        {/* <Login /> */}
+        <Login />
 
-        <TodoList/>
+        {/* <TodoList/> */}
 
       </AuthProvider>
     </BrowserRouter>
