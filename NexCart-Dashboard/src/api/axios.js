@@ -11,9 +11,10 @@ import axios from "axios";
 
 // API configuration
 export const api = axios.create({
-  baseURL: "https://e-commerce-api-3wara.vercel.app",
+  baseURL: import.meta.env.VITE_API_BASE_URL || "https://e-commerce-api-3wara.vercel.app",
   headers: {
     "Content-Type": "application/json",
+    timeout: 1000, 
   },
   withCredentials: true,
 });
